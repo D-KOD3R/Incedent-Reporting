@@ -1,34 +1,38 @@
-  <% if @incident.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@incident.errors.count, "error") %> prohibited this pet from being saved:</h2>
- 
-      <ul>
-      <% @incident.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-<%= form_for @incident, method: 'post', html: { multipart: true } do |f| %>
- 
-  <div class="field">
-    <%= f.label :school_name %><br>
-    <h3><%= @incident.school_name %></h3>
-    <%= f.hidden_field :school_name%>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
+<div class="upload_form">
+	<% if @incident.errors.any? %>
+	    <div id="error_explanation">
+	      <h2><%= pluralize(@incident.errors.count, "error") %> prohibited this pet from being saved:</h2>
+	 
+	      <ul>
+	      <% @incident.errors.full_messages.each do |message| %>
+	        <li><%= message %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	<%= form_for @incident, method: 'post', html: { multipart: true } do |f| %>
+	 
 	  <div class="field">
-	  	<%= f.fields_for :incident_images do |ff| %>
-		  <div>
-		    <%= ff.label :image %><br>
-		    <%= ff.file_field :image, multiple: true %>
-		  </div>
-		<% end %>
+	    <h3><%= @incident.school_name %></h3>
+	    <%= f.label :incident_reporting_page %><br>
+	    <%= f.hidden_field :school_name%>
+	    <br>
 	  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+	  <div class="field">
+	    <%= f.label :description %><br>
+	    <%= f.text_area :description, required: true, rows: "20", cols: "72"  %>
+	  </div>
+		  <div class="field">
+		  	<%= f.fields_for :incident_images do |ff| %>
+			  <div>
+			  	<h5>Add Photos</h5>
+			    <%= ff.file_field :image, multiple: true, accept: 'image/png,image/jpeg' %>
+			  </div>
+			<% end %>
+			<hr>
+		  </div>
+	  <div class="actions">
+	    <%= f.submit "Submit" %>
+	  </div>
+	<% end %>
+</div>
