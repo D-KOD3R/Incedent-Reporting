@@ -1,0 +1,34 @@
+  <% if @incident.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@incident.errors.count, "error") %> prohibited this pet from being saved:</h2>
+ 
+      <ul>
+      <% @incident.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%= form_for @incident, method: 'post', html: { multipart: true } do |f| %>
+ 
+  <div class="field">
+    <%= f.label :school_name %><br>
+    <h3><%= @incident.school_name %></h3>
+    <%= f.hidden_field :school_name%>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+	  <div class="field">
+	  	<%= f.fields_for :incident_images do |ff| %>
+		  <div>
+		    <%= ff.label :image %><br>
+		    <%= ff.file_field :image, multiple: true %>
+		  </div>
+		<% end %>
+	  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
